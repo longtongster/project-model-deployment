@@ -2,7 +2,15 @@
 
 Simple flask app that can be used to upload and display an image
 
-## Run using docker
+## Run the application using python
+
+cd into the directory `flaskapp`. In order to run the app type:
+
+`python3 appie.py`
+
+this should start the app and run the application in debug model, open for all IP adresses and running on port 80
+
+## Run the application using docker
 
 It also has a Dockerfile. In order to run via a container first build the image and then run a container
 To build the image type:
@@ -17,7 +25,7 @@ After building the image you can create a container using
 
 After uploading an image you can check it is saved inside the container. For this get access the container using
 
-gi` sudo docker container exec -it image-app bash`
+` sudo docker container exec -it image-app bash`
 
 ## TODO
 - create a requirements.txt
