@@ -5,7 +5,7 @@ RUN pip install matplotlib
 RUN mkdir app
 WORKDIR app
 
-COPY ./project-model-deployment .
+COPY ./flaskapp .
 
-EXPOSE 5000
+EXPOSE 80
 CMD [ "python", "appie.py" ]
