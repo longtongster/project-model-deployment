@@ -17,3 +17,5 @@ After uploading an image you can check it is saved inside the container. For thi
 
 ## TODO
 - create a requirements.txt
+- connect to DNS
+- serve pytorch classifier
