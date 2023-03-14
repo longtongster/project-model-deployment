@@ -28,6 +28,14 @@ After uploading an image you can check it is saved inside the container. For thi
 ` sudo docker container exec -it image-app bash`
 
 ## TODO
+- train a pytorch classifier - using pytorch workflow
+  - train a cats vs dogs model
+  - save the weights
+  - experiment with tips from the course
+  - same transforms during testing as during inference
+- implement inference
+  - implement inference to work in a script
+  - implement inference to work via flask
 - create a requirements.txt
 - connect to DNS
-- serve pytorch classifier
+
