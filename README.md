@@ -34,7 +34,8 @@ After uploading an image you can check it is saved inside the container. For thi
   - experiment with tips from the course
   - same transforms during testing as during inference
 - implement inference
-  - implement inference to work in a script
+  - inference via script - DONE
+  - create a function `predict`
   - implement inference to work via flask
 - create a requirements.txt
 - connect to DNS
