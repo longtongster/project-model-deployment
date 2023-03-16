@@ -39,3 +39,16 @@ After uploading an image you can check it is saved inside the container. For thi
 - create a requirements.txt
 - connect to DNS
 
+### Bootstrap script
+
+The following bootstrap script can be used to install required software on our EC2 instance
+
+```#!/bin/bash
+sudo apt update -y
+supo apt upgrade -y
+sudo apt install python3-pip -y
+pip3 install flask
+sudo apt install gunicorn -y
+sudo apt-get install docker-compose -y
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+

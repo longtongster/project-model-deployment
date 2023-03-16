@@ -56,7 +56,7 @@ class Cnn(nn.Module):
 
 if __name__ == "__main__":
     loaded_model = Cnn()
-    loaded_model.load_state_dict(torch.load("./cats_vs_dogs.pth"))
+    loaded_model.load_state_dict(torch.load("./cats_vs_dogs.pth", map_location=torch.device("cpu")))
     loaded_model.eval()
     # Reshape a PIL image to (224, 224) and return a pytorch tensor
     transform = transforms.Compose([
