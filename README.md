@@ -2,6 +2,11 @@
 
 Simple flask app that can be used to upload and display an image
 
+## Prepera EC2 instance
+
+Use an `ubuntu` AMI and use the user data that is available in the `user_data` file. This should install all the 
+necessary packages to run the code in the repository. 
+
 ## Run the application using python
 
 cd into the directory `flaskapp`. In order to run the app type:
@@ -35,13 +40,11 @@ After uploading an image you can check it is saved inside the container. For thi
   - same transforms during testing as during inference
 - implement inference
   - inference via script - DONE
-  - create a function `predict`
-  - implement inference to work via flask
+  - create a function `predict` - DONE
+  - implement inference to work via flask - DONE
+  - show prediction on the site
 - create a requirements.txt
 - connect to DNS
 
-### Bootstrap script
-
-Use the bootstrap script in the file `user_data` to boot the EC2 instance with the proper requirements.
 
 

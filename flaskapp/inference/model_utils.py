@@ -68,7 +68,7 @@ def read_and_preproces_image(pil_image):
     ])
 
     # transform the image
-    img_array = transform(img)
+    img_array = transform(pil_image)
 
     # change shape of the array from (C, H, W) -> (B, C, H, W)
     # such that our model can consume the image
@@ -76,18 +76,18 @@ def read_and_preproces_image(pil_image):
     return img_batch
 
 
-def load_model():
+def load_model(model_path):
     loaded_model = Cnn()
-    loaded_model.load_state_dict(torch.load("./cats_vs_dogs.pth", map_location=torch.device("cpu")))
+    loaded_model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
     loaded_model.eval()
     return loaded_model
 
 
-def predict(img_batch):
+def predict(model_path, img_batch):
     idx_to_classes = {0: "cat", 1: "dog"}
 
     # load model
-    loaded_model = load_model()
+    loaded_model = load_model(model_path)
 
     # forward pass
     logits = loaded_model(img_batch)
@@ -116,5 +116,5 @@ if __name__ == "__main__":
     # Flask should import these function and
     # execute the code
     img_batch = read_and_preproces_image(img)
-    prediction = predict(img_batch)
+    prediction = predict("./cats_vs_dogs.pth", img_batch)
     print(prediction)

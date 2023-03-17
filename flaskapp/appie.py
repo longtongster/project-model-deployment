@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
 from werkzeug.utils import secure_filename
+from inference.model_utils import read_and_preproces_image, predict
+from PIL import Image
 
 app = Flask(__name__)
 
@@ -30,7 +32,16 @@ def upload_img():
         if file and allowed_file(file.filename):
             # saving the file
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(img_path)
+
+            # inference
+            print("img path", img_path)
+            pil_image = Image.open(img_path)
+            img_batch = read_and_preproces_image(pil_image)
+            prediction = predict("./inference/cats_vs_dogs.pth", img_batch)
+            print(prediction)
+
             flash("File successfully saved")
 
             # if a file is submitted we want to show the image
