@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>Longtongsters paradise to Upload and Display images</title>
+<title>Cat vs Dog classifier</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
-<p><h1 align="center">Python Flask Upload and display image</h1></p>
+<p><h1 align="center">Longtongsters Model Deployment - Is it a cat or is it a dog</h1></p>
 <div class="container">
 <div class="row">
     <h2>Select a file to upload</h2>
@@ -20,6 +20,12 @@
           {% endif %}
         {% endwith %}
     </p>
+    {% if prediction %}
+        <p>
+            <h1>{{ prediction}}</h1>
+        </p>
+    {% endif %}
+
     {% if filename %}
         <div>
             <img src="{{ url_for('display_img', filename=filename) }}">

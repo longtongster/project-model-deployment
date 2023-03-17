@@ -47,7 +47,7 @@ def upload_img():
             # if a file is submitted we want to show the image
             # this means we have to provide the image as a parameter
             # return redirect(url_for('display_img'))
-            return render_template("index.html", filename=filename)
+            return render_template("index.html", filename=filename, prediction=prediction)
         else:
             flash("only extensions allowed are png, jpg or jpeg")
             return redirect(request.url)
