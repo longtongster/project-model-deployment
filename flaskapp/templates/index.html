@@ -22,7 +22,7 @@
     </p>
     {% if prediction %}
         <p>
-            <h1>{{ prediction}}</h1>
+            <h1>The model predicts a "{{ prediction['prediction'] }}" with probability: {{ (100*prediction['prob'])|round(3) }} %</h1>
         </p>
     {% endif %}
 
