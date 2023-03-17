@@ -1,10 +1,9 @@
-import torch
+from pathlib import Path
 
 import torch
 import torch.nn as nn
-from torchvision import transforms
-from pathlib import Path
 from PIL import Image
+from torchvision import transforms
 
 
 class Cnn(nn.Module):
@@ -54,33 +53,68 @@ class Cnn(nn.Module):
         out = self.fc2(out)
         return out
 
-if __name__ == "__main__":
-    loaded_model = Cnn()
-    loaded_model.load_state_dict(torch.load("./cats_vs_dogs.pth", map_location=torch.device("cpu")))
-    loaded_model.eval()
+
+def read_and_preproces_image(pil_image):
+    """
+    This function takes as input an image openened by PIL.Image.open(). It loads and preprocesses the
+    image such that it is ready to use by our model
+    """
     # Reshape a PIL image to (224, 224) and return a pytorch tensor
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
-        #transforms.RandomResizedCrop(224),
-        #transforms.RandomHorizontalFlip(),
-        transforms.ToTensor()])
+        # transforms.RandomResizedCrop(224),
+        # transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    # transform the image
+    img_array = transform(img)
+
+    # change shape of the array from (C, H, W) -> (B, C, H, W)
+    # such that our model can consume the image
+    img_batch = img_array.unsqueeze(dim=0)
+    return img_batch
 
 
-    test_path = "./test_images/6.jpg"
+def load_model():
+    loaded_model = Cnn()
+    loaded_model.load_state_dict(torch.load("./cats_vs_dogs.pth", map_location=torch.device("cpu")))
+    loaded_model.eval()
+    return loaded_model
+
+
+def predict(img_batch):
+    idx_to_classes = {0: "cat", 1: "dog"}
+
+    # load model
+    loaded_model = load_model()
+
+    # forward pass
+    logits = loaded_model(img_batch)
+
+    # determine the class and the calculate probability
+    probs = logits.softmax(dim=1)
+    pred = probs.argmax(dim=1).item()
+
+    # create a dictionary that returns the predicted class and probability
+    result = {"prediction": idx_to_classes[pred], "prob": probs.detach().numpy()[0][pred]}
+    return result
+
+
+if __name__ == "__main__":
+    # REPLACE THIS CODE TO handle by FLASK
+    # list of all paths to test images
+    test_path = Path('./test_images')
+    # select one image
+    test_list = list(test_path.glob("./*"))
+    print(len(test_list))
+    test_path = test_list[1]
     print(test_path)
     img = Image.open(test_path)
     img.show()
-    img_array=transform(img)
-    print(img_array.shape)
-    img_batch = img_array.unsqueeze(dim=0)
-    print(img_batch.shape)
 
-
-    idx_to_classes = {0:"cat", 1: "dog"}
-
-    logits = loaded_model(img_batch)
-    probs = logits.softmax(dim=1)
-    pred = probs.argmax(dim=1).item()
-    #print(idx_to_classes[pred])
-    result = {"prediction": idx_to_classes[pred], "prob": probs.detach().numpy()[0][pred]}
-    print(result)
+    # Flask should import these function and
+    # execute the code
+    img_batch = read_and_preproces_image(img)
+    prediction = predict(img_batch)
+    print(prediction)
