@@ -1,0 +1,8 @@
+#!/bin/bash
+sudo apt update -y
+supo apt upgrade -y
+sudo apt install python3-pip -y
+pip3 install flask
+sudo apt install gunicorn -y
+sudo apt-get install docker-compose -y
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
